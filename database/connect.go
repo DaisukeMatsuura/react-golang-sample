@@ -1,13 +1,20 @@
 package database
 
 import (
+	"github.com/DaisukeMatsuura/react-golang-sample/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
+var DB *gorm.DB
+
 func Connect() {
-	_, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	database, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
+
+	DB = database
+
+	database.AutoMigrate(&models.User{})
 }
